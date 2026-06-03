@@ -25,6 +25,84 @@ Die Python-Abhaengigkeiten stehen in `pyproject.toml`:
 - `pydantic`
 - `PyYAML`
 
+## Python installieren
+
+### Windows
+
+Empfohlen ist eine normale Python-Installation von `python.org` oder ueber den
+Windows-Paketmanager `winget`.
+
+Mit `winget`:
+
+```powershell
+winget install Python.Python.3.12
+```
+
+Danach PowerShell neu oeffnen und pruefen:
+
+```powershell
+python --version
+pip --version
+```
+
+Falls `python` nicht gefunden wird, pruefe bei der Installation, ob Python zum
+`PATH` hinzugefuegt wurde. Alternativ funktioniert auf vielen Windows-Systemen
+auch der Python-Launcher:
+
+```powershell
+py --version
+py -m pip --version
+```
+
+### Linux
+
+Unter Debian/Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install python3 python3-venv python3-pip
+```
+
+Pruefen:
+
+```bash
+python3 --version
+python3 -m pip --version
+```
+
+Unter anderen Distributionen installierst du entsprechend `python3`, `venv` und
+`pip` ueber den jeweiligen Paketmanager.
+
+### macOS
+
+Mit Homebrew:
+
+```bash
+brew install python
+```
+
+Pruefen:
+
+```bash
+python3 --version
+python3 -m pip --version
+```
+
+## Was ist eine virtuelle Umgebung?
+
+Eine virtuelle Umgebung ist ein lokaler Python-Arbeitsbereich fuer dieses
+Projekt. Die Abhaengigkeiten werden dann in `.venv` installiert und nicht global
+auf deinem System verteilt.
+
+Dieses Projekt nutzt:
+
+```text
+.venv/
+```
+
+Der Ordner muss nicht nach GitHub gepusht werden. Er kann jederzeit neu erstellt
+werden.
+
 ## Installation unter Windows
 
 Im Projektordner in PowerShell ausfuehren:
@@ -34,6 +112,21 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -e .
 ```
+
+Falls du den Windows-Python-Launcher nutzt:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -m pip install -e .
+```
+
+Was hier passiert:
+
+- `python -m venv .venv` erstellt die virtuelle Umgebung.
+- `.\.venv\Scripts\Activate.ps1` aktiviert sie in der aktuellen PowerShell.
+- `pip install -e .` liest `pyproject.toml`, installiert die Abhaengigkeiten und
+  registriert den Befehl `crewai-examples`.
 
 Danach den API Key fuer die aktuelle PowerShell setzen:
 
@@ -60,6 +153,13 @@ source .venv/bin/activate
 pip install -e .
 ```
 
+Was hier passiert:
+
+- `python3 -m venv .venv` erstellt die virtuelle Umgebung.
+- `source .venv/bin/activate` aktiviert sie in der aktuellen Shell.
+- `pip install -e .` liest `pyproject.toml`, installiert die Abhaengigkeiten und
+  registriert den Befehl `crewai-examples`.
+
 Danach den API Key fuer die aktuelle Shell setzen:
 
 ```bash
@@ -74,6 +174,38 @@ export CREWAI_MODEL="anthropic/claude-sonnet-4-20250514"
 
 Wenn `CREWAI_MODEL` nicht gesetzt ist, nutzt das Projekt
 `anthropic/claude-sonnet-4-20250514`.
+
+## pyproject.toml starten und verstehen
+
+`pyproject.toml` ist die Projektbeschreibung fuer Python. Darin stehen Name,
+Python-Version, Abhaengigkeiten und der Startbefehl:
+
+```toml
+[project.scripts]
+crewai-examples = "examples.main:main"
+```
+
+Das bedeutet: Nach `pip install -e .` kannst du das Projekt mit
+`crewai-examples` starten. Intern ruft Python dann die Funktion `main()` aus
+`examples/main.py` auf.
+
+Typischer Ablauf:
+
+```text
+pyproject.toml -> pip install -e . -> crewai-examples -> examples.main:main
+```
+
+Wenn du das Projekt ohne installierten Script-Befehl starten willst, geht auch:
+
+```powershell
+python -m examples.main 01
+```
+
+oder unter Linux/macOS:
+
+```bash
+python3 -m examples.main 01
+```
 
 ## Beispiele starten unter Windows
 
