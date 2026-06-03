@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "crewai-claude-code-basic-examples"
 version = "0.1.0"
@@ -11,6 +15,9 @@ dependencies = [
 
 [project.scripts]
 crewai-examples = "examples.main:main"
+
+[tool.setuptools.packages.find]
+include = ["examples*"]
 
 [tool.ruff]
 line-length = 100
