@@ -394,9 +394,15 @@ examples/
   Zufallswerte oder kleine Berechnungen, damit im Vortrag sichtbar wird, dass
   wirklich Python-Code ausgefuehrt wurde.
 - Beispiel 06 nutzt zusaetzlich `unit_tests_ausfuehren` und
-  `linting_ausfuehren`. Der Runner fuehrt diese Pruefungen zwischen Coder und
-  Tester wirklich aus und wiederholt die Coder-Runde, bis Tests und Linting
-  gruen sind oder `CREWAI_DARK_FACTORY_MAX_RUNS` erreicht ist.
+  `linting_ausfuehren`. Ausserdem gibt es `bash_befehl_ausfuehren`, womit die
+  technischen Agents echte Bash-Kommandos starten koennen, z. B.
+  `python --version`, `pip install ...` oder Testbefehle. Der Runner fuehrt die
+  Pflichtpruefungen zwischen Coder und Tester wirklich aus und wiederholt die
+  Coder-Runde, bis Tests und Linting gruen sind oder
+  `CREWAI_DARK_FACTORY_MAX_RUNS` erreicht ist.
+- Wichtig: `bash_befehl_ausfuehren` ist absichtlich sehr maechtig. Nutze es nur
+  in einer Umgebung, in der ein Agent Befehle ausfuehren darf. Auf Windows wird
+  dafuer Git Bash oder WSL benoetigt.
 - `agents.yaml` beschreibt Rollen, Ziele, Backstories und erlaubte Tools.
 - Im letzten Beispiel beschreibt `agents.yaml` zusaetzlich pro Agent ein eigenes
   `llm`-Profil mit Modell, Temperatur und Tokenlimit.

@@ -10,6 +10,7 @@ import yaml
 from crewai import Agent, Crew, LLM, Process, Task
 
 from examples.tools import (
+    BashBefehlAusfuehrenTool,
     BudgetNotizTool,
     CodeVorgabenTool,
     KalenderNotizTool,
@@ -28,6 +29,7 @@ from examples.tools import (
 DEFAULT_MODEL = "anthropic/claude-sonnet-4-6"
 TOOL_REGISTRY = {
     "vorrats_check": VorratsCheckTool,
+    "bash_befehl_ausfuehren": BashBefehlAusfuehrenTool,
     "wetter_notiz": WetterNotizTool,
     "budget_notiz": BudgetNotizTool,
     "kalender_notiz": KalenderNotizTool,

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import ast
 from datetime import datetime
+import os
 import random
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -388,4 +390,76 @@ class LintingAusfuehrenTool(BaseTool):
             f"LINT_STATUS: {status}\n"
             "Pruefungen: Syntax per ast.parse, Pflichtfunktionen, Zeilenlaenge, Tabs, eval/exec.\n"
             f"Ergebnis:\n{issue_text}"
+        )
+
+
+class BashBefehlAusfuehrenInput(BaseModel):
+    befehl: str = Field(..., description="Bash-Befehl, der ausgefuehrt werden soll.")
+    arbeitsverzeichnis: str | None = Field(
+        default=None,
+        description="Optionales Arbeitsverzeichnis. Ohne Angabe wird das aktuelle Verzeichnis genutzt.",
+    )
+    timeout_sekunden: int = Field(
+        default=60,
+        description="Maximale Laufzeit des Befehls in Sekunden.",
+        ge=1,
+        le=600,
+    )
+
+
+class BashBefehlAusfuehrenTool(BaseTool):
+    name: str = "bash_befehl_ausfuehren"
+    description: str = (
+        "Fuehrt einen beliebigen Bash-Befehl aus, z. B. python --version, "
+        "pip install <paket> oder pytest. Gibt Exit-Code, stdout und stderr zurueck."
+    )
+    args_schema: Type[BaseModel] = BashBefehlAusfuehrenInput
+
+    def _run(
+        self,
+        befehl: str,
+        arbeitsverzeichnis: str | None = None,
+        timeout_sekunden: int = 60,
+    ) -> str:
+        bash_path = shutil.which("bash")
+        if bash_path is None:
+            return (
+                f"{tool_lauf_info(self.name)}\n"
+                "BASH_STATUS: FAIL\n"
+                "Auf diesem System wurde kein bash gefunden. Installiere z. B. Git Bash, "
+                "WSL oder fuehre das Beispiel auf Linux/macOS aus."
+            )
+
+        cwd = arbeitsverzeichnis or os.getcwd()
+        try:
+            result = subprocess.run(
+                [bash_path, "-lc", befehl],
+                cwd=cwd,
+                capture_output=True,
+                text=True,
+                timeout=timeout_sekunden,
+                check=False,
+            )
+        except subprocess.TimeoutExpired as error:
+            stdout = (error.stdout or "").strip()
+            stderr = (error.stderr or "").strip()
+            return (
+                f"{tool_lauf_info(self.name)}\n"
+                "BASH_STATUS: TIMEOUT\n"
+                f"Befehl: {befehl}\n"
+                f"Arbeitsverzeichnis: {cwd}\n"
+                f"Timeout: {timeout_sekunden} Sekunden\n"
+                f"stdout:\n{stdout}\n"
+                f"stderr:\n{stderr}"
+            )
+
+        status = "PASS" if result.returncode == 0 else "FAIL"
+        return (
+            f"{tool_lauf_info(self.name)}\n"
+            f"BASH_STATUS: {status}\n"
+            f"Exit-Code: {result.returncode}\n"
+            f"Befehl: {befehl}\n"
+            f"Arbeitsverzeichnis: {cwd}\n"
+            f"stdout:\n{result.stdout.strip()}\n"
+            f"stderr:\n{result.stderr.strip()}"
         )

@@ -20,7 +20,12 @@ System, sondern ein einfacher Taschenrechner in Python.
 - Jede Station nutzt ein eigenes Tool:
   `taschenrechner_anforderungen`, `code_vorgaben`,
   `testfall_vorschlaege`, `unit_tests_ausfuehren`,
-  `linting_ausfuehren` und `taschenrechner_qa_check`.
+  `linting_ausfuehren`, `bash_befehl_ausfuehren` und
+  `taschenrechner_qa_check`.
+- `bash_befehl_ausfuehren` darf beliebige Bash-Kommandos ausfuehren, z. B.
+  `python --version`, `pip install ...`, `pytest` oder eigene Skripte. Das ist
+  fuer eine Dark-Factory realistisch, sollte aber nur in einer passenden
+  Entwicklungsumgebung laufen.
 - Coder und Tester arbeiten in einer echten Pruefschleife:
   Der Coder schreibt Code, der Runner fuehrt Linting und Unit-Tests aus, der
   Tester bewertet die echten Ergebnisse und gibt Feedback zurueck. Bei Fehlern
@@ -28,6 +33,8 @@ System, sondern ein einfacher Taschenrechner in Python.
 - Die Unit-Tests werden wirklich mit `python -m unittest -v` ausgefuehrt.
 - Das Linting wird wirklich mit Python-Code ausgefuehrt: Syntaxpruefung per
   `ast.parse`, Pflichtfunktionen, Zeilenlaenge, Tabs und `eval`/`exec`.
+- Auf Windows braucht das Bash-Tool Git Bash oder WSL. Unter Linux/macOS ist
+  Bash meist direkt verfuegbar.
 - Die Agents nutzen unterschiedliche Modelle und Temperaturen:
   Produktdesigner und Tester laufen mit einem leichten Modell, Coder und
   QA-Checker mit einem staerkeren Modell.

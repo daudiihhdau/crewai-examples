@@ -21,6 +21,7 @@ coder:
     Funktionen, wenige Sonderfaelle und gut lesbare Fehlermeldungen.
   tools:
     - code_vorgaben
+    - bash_befehl_ausfuehren
     - linting_ausfuehren
   llm:
     model: anthropic/claude-sonnet-4-6
@@ -37,6 +38,7 @@ tester:
     praktisch und formulierst Tests so, dass Einsteiger sie nachvollziehen koennen.
   tools:
     - testfall_vorschlaege
+    - bash_befehl_ausfuehren
     - unit_tests_ausfuehren
     - linting_ausfuehren
   llm:
@@ -54,6 +56,7 @@ qa_checker:
     fehlenden Funktionen, unklaren Fehlerfaellen und Abweichungen von der Aufgabe.
   tools:
     - taschenrechner_qa_check
+    - bash_befehl_ausfuehren
     - unit_tests_ausfuehren
     - linting_ausfuehren
   llm:

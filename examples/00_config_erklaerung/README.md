@@ -110,7 +110,8 @@ beispiel_agent:
 - `tools`: Liste der Tool-Namen, die dieser Agent benutzen darf. Die Namen
   muessen in `TOOL_REGISTRY` in `examples/main.py` registriert sein.
   Beispiele aus diesem Repo sind `vorrats_check`, `mail_senden`,
-  `unit_tests_ausfuehren` und `linting_ausfuehren`.
+  `unit_tests_ausfuehren`, `linting_ausfuehren` und
+  `bash_befehl_ausfuehren`.
 - `llm`: optionales Modellprofil fuer diesen Agent. Wenn es fehlt, nutzt der
   Agent das globale Modell.
 - `model`: Standardmodell fuer diesen Agent.
@@ -167,6 +168,11 @@ Runner fuehrt nach der Coder-Rolle echtes Linting und echte Unit-Tests aus,
 gibt die Ergebnisse an den Tester weiter und startet den Coder bei Fehlern
 erneut. Solche Ablaufregeln gehoeren bewusst in Python, weil YAML hier nur
 Rollen, Aufgaben und erlaubte Tools beschreibt.
+
+Das Tool `bash_befehl_ausfuehren` ist ein Sonderfall: Es kann beliebige
+Bash-Kommandos starten, auch Installationsbefehle wie `pip install ...`. Das
+zeigt, wie maechtig Tools sein koennen. Fuer echte Projekte sollte man so ein
+Tool nur in kontrollierten Entwicklungs- oder Container-Umgebungen freigeben.
 
 ## Wichtig fuer neue Beispiele
 
