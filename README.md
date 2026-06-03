@@ -103,6 +103,65 @@ Dieses Projekt nutzt:
 Der Ordner muss nicht nach GitHub gepusht werden. Er kann jederzeit neu erstellt
 werden.
 
+## Installation ohne virtuelle Umgebung
+
+Du kannst das Projekt auch ohne `.venv` installieren. Das ist fuer schnelle
+Server-Tests okay, aber weniger sauber, weil die Pakete dann in die aktuelle
+Python-Umgebung installiert werden.
+
+Nutze diese Variante nur, wenn du weisst, welche Python-Umgebung aktiv ist, z. B.
+auf einem frischen Server oder in einem Wegwerf-Container.
+
+### Windows ohne venv
+
+```powershell
+python -m pip install -e .
+```
+
+Mit Python-Launcher:
+
+```powershell
+py -m pip install -e .
+```
+
+Start:
+
+```powershell
+crewai-examples 01
+```
+
+Falls `crewai-examples` nicht gefunden wird, nutze direkt:
+
+```powershell
+python -m examples.main 01
+```
+
+### Linux/macOS ohne venv
+
+```bash
+python3 -m pip install -e .
+```
+
+Start:
+
+```bash
+crewai-examples 01
+```
+
+Falls `crewai-examples` nicht gefunden wird, nutze direkt:
+
+```bash
+python3 -m examples.main 01
+```
+
+Auf manchen Linux-Systemen verhindert Python globale Installationen und zeigt
+einen Hinweis wie `externally-managed-environment`. Dann nimm besser die
+`.venv`-Variante oder, nur wenn du es wirklich willst:
+
+```bash
+python3 -m pip install -e . --break-system-packages
+```
+
 ## Installation unter Windows
 
 Im Projektordner in PowerShell ausfuehren:
