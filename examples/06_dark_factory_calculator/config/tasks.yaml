@@ -14,9 +14,12 @@ write_calculator_code:
     - design_calculator
   description: >
     Schreibe den Python-Code fuer den Taschenrechner auf Basis der Anforderungen.
-    Rufe code_vorgaben fuer 'Python' auf. Der Code soll nur Standardbibliothek
-    nutzen und aus genau einem Codeblock bestehen. Nutze eine Funktion
-    calculate(a: float, operator: str, b: float).
+    Rufe code_vorgaben fuer 'Python' auf. Nutze linting_ausfuehren, wenn du
+    deinen Code vorab pruefen willst. Der Code soll nur Standardbibliothek nutzen
+    und aus genau einem Codeblock bestehen. Nutze eine Funktion
+    calculate(a: float, operator: str, b: float). In Beispiel 06 wird diese Task
+    bei Fehlern erneut gestartet und bekommt das Tester-Feedback der vorherigen
+    Runde.
   expected_output: >
     Eine kurze deutsche Erklaerung plus genau ein Python-Codeblock mit
     calculate, run_examples und einem if __name__ == "__main__"-Block.
@@ -28,11 +31,15 @@ design_tests:
     - write_calculator_code
   description: >
     Entwirf einfache Testfaelle fuer den Taschenrechner. Rufe
-    testfall_vorschlaege fuer 'MiniCalc' auf. Decke Addition, Subtraktion,
-    Multiplikation, Division, Division durch 0 und unbekannten Operator ab.
+    testfall_vorschlaege fuer 'MiniCalc' auf. Nutze unit_tests_ausfuehren und
+    linting_ausfuehren fuer den Code, den du pruefst. Decke Addition,
+    Subtraktion, Multiplikation, Division, Division durch 0 und unbekannten
+    Operator ab. In Beispiel 06 spricht der Tester so lange mit dem Coder, bis
+    echte Unit-Tests und echtes Linting bestanden sind oder die maximale Anzahl
+    Runden erreicht wurde.
   expected_output: >
-    Eine deutsche Liste mit Testfaellen, erwarteten Ergebnissen und kurzer
-    Begruendung.
+    Eine deutsche Liste mit Testfaellen, echten Pruefergebnissen, konkretem
+    Coder-Feedback und TESTER_STATUS: PASS oder TESTER_STATUS: FAIL.
 
 run_qa_check:
   agent: qa_checker
@@ -42,8 +49,10 @@ run_qa_check:
     - design_tests
   description: >
     Pruefe das Ergebnis der kleinen Dark-Factory. Rufe taschenrechner_qa_check genau
-    einmal mit den Funktionsnamen auf, die im Code vorkommen sollen. Bewerte
-    danach, ob Produktbeschreibung, Code und Tests zusammenpassen.
+    einmal mit den Funktionsnamen auf, die im Code vorkommen sollen. Nutze bei
+    Bedarf unit_tests_ausfuehren und linting_ausfuehren fuer eine letzte
+    technische Kontrolle. Bewerte danach, ob Produktbeschreibung, Code und Tests
+    zusammenpassen.
   expected_output: >
     Ein deutscher QA-Bericht mit bestanden/nicht bestanden, zwei Staerken, bis
     zu drei Risiken und einer finalen Empfehlung.

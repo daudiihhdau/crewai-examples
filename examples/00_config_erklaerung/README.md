@@ -109,6 +109,8 @@ beispiel_agent:
 - `backstory`: Kontext, Arbeitsstil und Perspektive des Agents.
 - `tools`: Liste der Tool-Namen, die dieser Agent benutzen darf. Die Namen
   muessen in `TOOL_REGISTRY` in `examples/main.py` registriert sein.
+  Beispiele aus diesem Repo sind `vorrats_check`, `mail_senden`,
+  `unit_tests_ausfuehren` und `linting_ausfuehren`.
 - `llm`: optionales Modellprofil fuer diesen Agent. Wenn es fehlt, nutzt der
   Agent das globale Modell.
 - `model`: Standardmodell fuer diesen Agent.
@@ -159,6 +161,12 @@ zweite_task:
 4. Tasks werden in YAML-Reihenfolge erstellt.
 5. `context` verbindet spaetere Tasks mit frueheren Task-Ergebnissen.
 6. Die Crew laeuft sequenziell mit `Process.sequential`.
+
+Beispiel 06 hat zusaetzlich eine kleine Schleife in `examples/main.py`: Der
+Runner fuehrt nach der Coder-Rolle echtes Linting und echte Unit-Tests aus,
+gibt die Ergebnisse an den Tester weiter und startet den Coder bei Fehlern
+erneut. Solche Ablaufregeln gehoeren bewusst in Python, weil YAML hier nur
+Rollen, Aufgaben und erlaubte Tools beschreibt.
 
 ## Wichtig fuer neue Beispiele
 

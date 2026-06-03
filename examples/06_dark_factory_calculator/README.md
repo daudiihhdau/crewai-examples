@@ -19,7 +19,15 @@ System, sondern ein einfacher Taschenrechner in Python.
 - Task-Kontext wandert von Produktidee zu Code, Tests und QA.
 - Jede Station nutzt ein eigenes Tool:
   `taschenrechner_anforderungen`, `code_vorgaben`,
-  `testfall_vorschlaege` und `taschenrechner_qa_check`.
+  `testfall_vorschlaege`, `unit_tests_ausfuehren`,
+  `linting_ausfuehren` und `taschenrechner_qa_check`.
+- Coder und Tester arbeiten in einer echten Pruefschleife:
+  Der Coder schreibt Code, der Runner fuehrt Linting und Unit-Tests aus, der
+  Tester bewertet die echten Ergebnisse und gibt Feedback zurueck. Bei Fehlern
+  startet die Coder-Runde erneut.
+- Die Unit-Tests werden wirklich mit `python -m unittest -v` ausgefuehrt.
+- Das Linting wird wirklich mit Python-Code ausgefuehrt: Syntaxpruefung per
+  `ast.parse`, Pflichtfunktionen, Zeilenlaenge, Tabs und `eval`/`exec`.
 - Die Agents nutzen unterschiedliche Modelle und Temperaturen:
   Produktdesigner und Tester laufen mit einem leichten Modell, Coder und
   QA-Checker mit einem staerkeren Modell.
@@ -29,6 +37,8 @@ System, sondern ein einfacher Taschenrechner in Python.
 
 - Eine Agenten-Crew kann wie eine kleine Produktionslinie funktionieren.
 - Rollen helfen, Denken zu trennen: Produkt, Umsetzung, Test, Qualitaet.
+- Eine Agentenschleife ist dann sinnvoll, wenn ein Pruefergebnis maschinell
+  entschieden werden kann: hier `UNIT_TEST_STATUS: PASS` und `LINT_STATUS: PASS`.
 - Pro Agent kann ein eigenes `llm`-Profil in `agents.yaml` stehen.
 - Auch ein Coder-Beispiel sollte klein genug bleiben, damit man die CrewAI-Idee
   erkennt und nicht im Produkt selbst versinkt.
@@ -46,5 +56,22 @@ $env:CREWAI_STARKES_MODELL="anthropic/dein-starkes-modell"
 ## Start
 
 ```powershell
+crewai-examples 06
+```
+
+Die Pruefschleife laeuft standardmaessig maximal vier Runden. Du kannst das
+ueber eine Umgebungsvariable aendern.
+
+Windows:
+
+```powershell
+$env:CREWAI_DARK_FACTORY_MAX_RUNS="6"
+crewai-examples 06
+```
+
+Linux/macOS:
+
+```bash
+export CREWAI_DARK_FACTORY_MAX_RUNS="6"
 crewai-examples 06
 ```

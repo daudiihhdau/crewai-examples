@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+import ast
 from datetime import datetime
 import random
+import subprocess
+import sys
+import tempfile
+import textwrap
 from typing import Type
 
 from crewai.tools import BaseTool
@@ -268,4 +273,119 @@ class TaschenrechnerQaCheckTool(BaseTool):
             "- run_examples ist vorhanden.\n"
             f"- Dynamischer QA-Score: {score}/100.\n"
             "- Bitte pruefen: Division durch 0 und unbekannter Operator."
+        )
+
+
+class UnitTestsAusfuehrenInput(BaseModel):
+    code: str = Field(..., description="Python-Code des Taschenrechners.")
+
+
+class UnitTestsAusfuehrenTool(BaseTool):
+    name: str = "unit_tests_ausfuehren"
+    description: str = "Fuehrt echte unittest-Tests fuer den Taschenrechner-Code aus."
+    args_schema: Type[BaseModel] = UnitTestsAusfuehrenInput
+
+    def _run(self, code: str) -> str:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            calculator_path = f"{temp_dir}/calculator.py"
+            tests_path = f"{temp_dir}/test_calculator.py"
+            with open(calculator_path, "w", encoding="utf-8") as code_file:
+                code_file.write(textwrap.dedent(code).strip() + "\n")
+            with open(tests_path, "w", encoding="utf-8") as tests_file:
+                tests_file.write(
+                    textwrap.dedent(
+                        """
+                        import unittest
+                        from calculator import calculate
+
+
+                        class CalculatorTest(unittest.TestCase):
+                            def test_addition(self):
+                                self.assertEqual(calculate(2, "+", 3), 5)
+
+                            def test_subtraction(self):
+                                self.assertEqual(calculate(7, "-", 4), 3)
+
+                            def test_multiplication(self):
+                                self.assertEqual(calculate(3, "*", 4), 12)
+
+                            def test_division(self):
+                                self.assertEqual(calculate(8, "/", 2), 4)
+
+                            def test_division_by_zero(self):
+                                result = calculate(8, "/", 0)
+                                self.assertIsInstance(result, str)
+                                self.assertIn("0", result)
+
+                            def test_unknown_operator(self):
+                                result = calculate(8, "%", 2)
+                                self.assertIsInstance(result, str)
+                                self.assertTrue("operator" in result.lower() or "unbekannt" in result.lower())
+
+
+                        if __name__ == "__main__":
+                            unittest.main()
+                        """
+                    ).strip()
+                    + "\n"
+                )
+            result = subprocess.run(
+                [sys.executable, "-m", "unittest", "-v"],
+                cwd=temp_dir,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+            )
+        status = "PASS" if result.returncode == 0 else "FAIL"
+        output = (result.stdout + "\n" + result.stderr).strip()
+        return (
+            f"{tool_lauf_info(self.name)}\n"
+            f"UNIT_TEST_STATUS: {status}\n"
+            "Befehl: python -m unittest -v\n"
+            f"Ausgabe:\n{output}"
+        )
+
+
+class LintingAusfuehrenInput(BaseModel):
+    code: str = Field(..., description="Python-Code des Taschenrechners.")
+
+
+class LintingAusfuehrenTool(BaseTool):
+    name: str = "linting_ausfuehren"
+    description: str = "Fuehrt ein einfaches echtes Python-Linting mit ast-Analyse aus."
+    args_schema: Type[BaseModel] = LintingAusfuehrenInput
+
+    def _run(self, code: str) -> str:
+        issues: list[str] = []
+        normalized_code = textwrap.dedent(code).strip() + "\n"
+        try:
+            tree = ast.parse(normalized_code)
+        except SyntaxError as error:
+            issues.append(f"Syntaxfehler in Zeile {error.lineno}: {error.msg}")
+            tree = None
+
+        for line_number, line in enumerate(normalized_code.splitlines(), start=1):
+            if len(line) > 100:
+                issues.append(f"Zeile {line_number} ist laenger als 100 Zeichen.")
+            if "\t" in line:
+                issues.append(f"Zeile {line_number} enthaelt Tabs statt Leerzeichen.")
+
+        if tree is not None:
+            functions = {node.name for node in tree.body if isinstance(node, ast.FunctionDef)}
+            for function_name in ["calculate", "run_examples"]:
+                if function_name not in functions:
+                    issues.append(f"Funktion {function_name} fehlt.")
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                    if node.func.id in {"eval", "exec"}:
+                        issues.append(f"Unsichere Funktion {node.func.id} wird verwendet.")
+
+        status = "PASS" if not issues else "FAIL"
+        issue_text = "\n".join(f"- {issue}" for issue in issues) if issues else "- Keine Lint-Probleme gefunden."
+        return (
+            f"{tool_lauf_info(self.name)}\n"
+            f"LINT_STATUS: {status}\n"
+            "Pruefungen: Syntax per ast.parse, Pflichtfunktionen, Zeilenlaenge, Tabs, eval/exec.\n"
+            f"Ergebnis:\n{issue_text}"
         )

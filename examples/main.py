@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import os
 from pathlib import Path
+import re
 from typing import Any
 
 import yaml
@@ -12,10 +13,12 @@ from examples.tools import (
     BudgetNotizTool,
     CodeVorgabenTool,
     KalenderNotizTool,
+    LintingAusfuehrenTool,
     MailSendenTool,
     TaschenrechnerAnforderungenTool,
     TaschenrechnerQaCheckTool,
     TestfallVorschlaegeTool,
+    UnitTestsAusfuehrenTool,
     UmzugsKistenNotizTool,
     VorratsCheckTool,
     WetterNotizTool,
@@ -34,6 +37,8 @@ TOOL_REGISTRY = {
     "code_vorgaben": CodeVorgabenTool,
     "testfall_vorschlaege": TestfallVorschlaegeTool,
     "taschenrechner_qa_check": TaschenrechnerQaCheckTool,
+    "unit_tests_ausfuehren": UnitTestsAusfuehrenTool,
+    "linting_ausfuehren": LintingAusfuehrenTool,
 }
 EXAMPLES = {
     "01": {
@@ -100,6 +105,23 @@ def build_agent(agent_config: dict[str, Any]) -> Agent:
     )
 
 
+def run_single_task(agent: Agent, description: str, expected_output: str) -> str:
+    task = Task(description=description, expected_output=expected_output, agent=agent)
+    crew = Crew(agents=[agent], tasks=[task], process=Process.sequential, verbose=True)
+    return str(crew.kickoff())
+
+
+def extract_python_code(text: str) -> str:
+    match = re.search(r"```(?:python)?\s*(.*?)```", text, flags=re.IGNORECASE | re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    return text.strip()
+
+
+def checks_are_green(unit_test_result: str, lint_result: str) -> bool:
+    return "UNIT_TEST_STATUS: PASS" in unit_test_result and "LINT_STATUS: PASS" in lint_result
+
+
 def resolve_example(example: str) -> dict[str, Any]:
     if example in EXAMPLES:
         return EXAMPLES[example]
@@ -109,9 +131,122 @@ def resolve_example(example: str) -> dict[str, Any]:
     raise ValueError(f"Unknown example: {example}")
 
 
+def run_dark_factory_calculator(config_dir: Path) -> str:
+    agents_config = load_config(config_dir, "agents.yaml")
+    tasks_config = load_config(config_dir, "tasks.yaml")
+    agents = {
+        agent_name: build_agent(agent_config)
+        for agent_name, agent_config in agents_config.items()
+    }
+
+    design_config = tasks_config["design_calculator"]
+    design_result = run_single_task(
+        agents[design_config["agent"]],
+        design_config["description"],
+        design_config["expected_output"],
+    )
+
+    max_iterations = int(os.getenv("CREWAI_DARK_FACTORY_MAX_RUNS", "4"))
+    tester_feedback = "Noch kein Tester-Feedback. Starte mit einer sauberen ersten Version."
+    final_code = ""
+    final_lint_result = ""
+    final_unit_test_result = ""
+    transcript = [
+        "# Dark-Factory Ergebnis",
+        "## Produktdesign",
+        design_result,
+    ]
+
+    for iteration in range(1, max_iterations + 1):
+        coder_config = tasks_config["write_calculator_code"]
+        coder_description = (
+            f"{coder_config['description']}\n\n"
+            f"Iteration {iteration} von maximal {max_iterations}.\n"
+            "Produktanforderungen:\n"
+            f"{design_result}\n\n"
+            "Rueckmeldung vom Tester aus der letzten Runde:\n"
+            f"{tester_feedback}\n\n"
+            "Wenn die Rueckmeldung Fehler nennt, liefere eine korrigierte komplette Version. "
+            "Gib genau einen Python-Codeblock aus."
+        )
+        coder_result = run_single_task(
+            agents[coder_config["agent"]],
+            coder_description,
+            coder_config["expected_output"],
+        )
+        final_code = extract_python_code(coder_result)
+
+        lint_result = LintingAusfuehrenTool()._run(final_code)
+        unit_test_result = UnitTestsAusfuehrenTool()._run(final_code)
+        final_lint_result = lint_result
+        final_unit_test_result = unit_test_result
+
+        tester_config = tasks_config["design_tests"]
+        tester_description = (
+            f"{tester_config['description']}\n\n"
+            f"Iteration {iteration}: Du bist jetzt in der Pruefschleife mit dem Coder.\n"
+            "Der folgende Code wurde vom Runner wirklich gelintet und getestet:\n"
+            f"```python\n{final_code}\n```\n\n"
+            "Echtes Linting-Ergebnis:\n"
+            f"{lint_result}\n\n"
+            "Echtes Unit-Test-Ergebnis:\n"
+            f"{unit_test_result}\n\n"
+            "Gib dem Coder eine konkrete deutsche Rueckmeldung. Wenn alles gruen ist, "
+            "schreibe deutlich: TESTER_STATUS: PASS. Wenn etwas fehlschlaegt, schreibe "
+            "TESTER_STATUS: FAIL und liste die noetigen Korrekturen."
+        )
+        tester_feedback = run_single_task(
+            agents[tester_config["agent"]],
+            tester_description,
+            tester_config["expected_output"],
+        )
+
+        transcript.extend(
+            [
+                f"## Iteration {iteration}",
+                "### Coder",
+                coder_result,
+                "### Echtes Linting",
+                lint_result,
+                "### Echte Unit-Tests",
+                unit_test_result,
+                "### Tester",
+                tester_feedback,
+            ]
+        )
+
+        if checks_are_green(unit_test_result, lint_result):
+            break
+
+    qa_config = tasks_config["run_qa_check"]
+    qa_description = (
+        f"{qa_config['description']}\n\n"
+        "Finaler Code:\n"
+        f"```python\n{final_code}\n```\n\n"
+        "Finales echtes Linting:\n"
+        f"{final_lint_result}\n\n"
+        "Finale echte Unit-Tests:\n"
+        f"{final_unit_test_result}\n\n"
+        "Finales Tester-Feedback:\n"
+        f"{tester_feedback}\n\n"
+        "Bewerte, ob das Ziel erreicht wurde. Wenn Linting und Unit-Tests PASS sind, "
+        "formuliere eine klare Freigabe."
+    )
+    qa_result = run_single_task(
+        agents[qa_config["agent"]],
+        qa_description,
+        qa_config["expected_output"],
+    )
+    transcript.extend(["## QA-Checker", qa_result])
+    return "\n\n".join(transcript)
+
+
 def run_example(example: str) -> str:
     example_config = resolve_example(example)
     config_dir = example_config["config_dir"]
+    if config_dir.name == "config" and config_dir.parent.name == "06_dark_factory_calculator":
+        return run_dark_factory_calculator(config_dir)
+
     agents_config = load_config(config_dir, "agents.yaml")
     tasks_config = load_config(config_dir, "tasks.yaml")
     agents = {

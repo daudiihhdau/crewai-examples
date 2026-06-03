@@ -21,6 +21,7 @@ coder:
     Funktionen, wenige Sonderfaelle und gut lesbare Fehlermeldungen.
   tools:
     - code_vorgaben
+    - linting_ausfuehren
   llm:
     model: anthropic/claude-sonnet-4-6
     model_env: CREWAI_STARKES_MODELL
@@ -30,12 +31,14 @@ coder:
 
 tester:
   role: Tester
-  goal: Entwirf einfache Testfaelle fuer den Taschenrechner.
+  goal: Pruefe den Taschenrechner mit echten Unit-Tests und gib dem Coder Feedback.
   backstory: >
     Du testest die normalen Faelle und die wichtigsten Fehlerfaelle. Du denkst
     praktisch und formulierst Tests so, dass Einsteiger sie nachvollziehen koennen.
   tools:
     - testfall_vorschlaege
+    - unit_tests_ausfuehren
+    - linting_ausfuehren
   llm:
     model: anthropic/claude-haiku-4-5-20251001
     model_env: CREWAI_LEICHTES_MODELL
@@ -51,6 +54,8 @@ qa_checker:
     fehlenden Funktionen, unklaren Fehlerfaellen und Abweichungen von der Aufgabe.
   tools:
     - taschenrechner_qa_check
+    - unit_tests_ausfuehren
+    - linting_ausfuehren
   llm:
     model: anthropic/claude-sonnet-4-6
     model_env: CREWAI_STARKES_MODELL

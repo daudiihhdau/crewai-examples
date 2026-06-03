@@ -333,7 +333,8 @@ python3 -m examples.main 01
 4. `04_one_agent_multiple_tools`: ein Agent, mehrere Tools.
 5. `05_multi_agent_with_tools`: mehrere Agents, Tools und Task-Kontext.
 6. `06_dark_factory_calculator`: Dark-Factory mit Produktdesigner, Coder, Tester,
-   QA-Checker sowie unterschiedlichen Modellen und Temperaturen pro Agent.
+   QA-Checker, echter Coder-Tester-Schleife, echten Unit-Tests, echtem Linting
+   sowie unterschiedlichen Modellen und Temperaturen pro Agent.
 
 Die Idee: Erst Rollen und Tasks verstehen, dann Zusammenarbeit, danach Tools,
 danach mehrere Tools, danach mehrere Agents mit Kontext, zuletzt eine kleine
@@ -392,6 +393,10 @@ examples/
   sie echte Logik ausfuehren. Viele Tools erzeugen Lauf-IDs, Uhrzeiten,
   Zufallswerte oder kleine Berechnungen, damit im Vortrag sichtbar wird, dass
   wirklich Python-Code ausgefuehrt wurde.
+- Beispiel 06 nutzt zusaetzlich `unit_tests_ausfuehren` und
+  `linting_ausfuehren`. Der Runner fuehrt diese Pruefungen zwischen Coder und
+  Tester wirklich aus und wiederholt die Coder-Runde, bis Tests und Linting
+  gruen sind oder `CREWAI_DARK_FACTORY_MAX_RUNS` erreicht ist.
 - `agents.yaml` beschreibt Rollen, Ziele, Backstories und erlaubte Tools.
 - Im letzten Beispiel beschreibt `agents.yaml` zusaetzlich pro Agent ein eigenes
   `llm`-Profil mit Modell, Temperatur und Tokenlimit.
