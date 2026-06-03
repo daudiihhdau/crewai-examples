@@ -1,0 +1,35 @@
+# Diese Datei ist eine kommentierte Vorlage. Sie wird nicht als Crew-Beispiel
+# gestartet, sondern erklaert alle Agent-Felder, die spaeter benutzt werden.
+
+beispiel_agent:
+  # Technische Agent-ID. Tasks verwenden diese ID im Feld `agent`.
+  role: Beispielrolle
+
+  # Kurz und konkret: Was soll dieser Agent erreichen?
+  goal: Erklaere ein kleines Thema klar und verstaendlich.
+
+  # Mehrzeiliger Prompt-Kontext. Das `>` faltet Zeilen zu einem Fliesstext.
+  backstory: >
+    Du bist ein ruhiger, praktischer Helfer. Du erklaerst Dinge einfach und
+    arbeitest Schritt fuer Schritt.
+
+  # Liste erlaubter Tools. Leere Liste bedeutet: keine Tools.
+  tools:
+    - vorrats_check
+
+  # Optional. Wenn dieses Feld fehlt, nutzt der Agent das globale CREWAI_MODEL.
+  llm:
+    # Fallback-Modell, falls model_env nicht gesetzt ist.
+    model: anthropic/claude-sonnet-4-20250514
+
+    # Optionaler Env-Override. Wenn gesetzt, gewinnt diese Umgebungsvariable.
+    model_env: CREWAI_STARKES_MODELL
+
+    # Niedrig = deterministischer, hoch = freier/kreativer.
+    temperature: 0.2
+
+    # Antwortbudget fuer diesen Agent.
+    max_tokens: 2200
+
+  # Zeigt mehr Ausgaben im Lauf, z. B. Tool-Aufrufe.
+  verbose: true

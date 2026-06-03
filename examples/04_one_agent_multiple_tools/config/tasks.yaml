@@ -1,0 +1,10 @@
+create_day_plan:
+  agent: day_planner
+  description: >
+    Plane einen normalen Mittwoch mit Einkauf, etwas Haushalt und einem einfachen
+    Abendessen. Rufe wetter_notiz fuer 'Mittwoch', kalender_notiz fuer 'Mittwoch'
+    und budget_notiz fuer 'Wocheneinkauf' auf. Beruecksichtige alle drei
+    Tool-Ergebnisse.
+  expected_output: >
+    Ein deutscher Tagesplan mit Vormittag, Nachmittag, Abend, Einkaufsliste und
+    kurzer Begruendung der Reihenfolge.

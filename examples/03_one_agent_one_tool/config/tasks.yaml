@@ -1,0 +1,9 @@
+plan_simple_dinner:
+  agent: cooking_helper
+  description: >
+    Plane ein einfaches Abendessen fuer zwei Personen. Rufe zuerst vorrats_check
+    fuer das Gericht 'schnelle Gemuese-Pasta' auf. Nutze die Tool-Ergebnisse,
+    damit moeglichst wenig neu gekauft werden muss.
+  expected_output: >
+    Eine deutsche Antwort mit Gericht, fehlenden Zutaten, kurzer Kochreihenfolge
+    und einem Tipp zum Vereinfachen.

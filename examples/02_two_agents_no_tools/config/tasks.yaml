@@ -1,0 +1,18 @@
+draft_weekend_plan:
+  agent: weekend_planner
+  description: >
+    Entwirf einen einfachen Wochenendplan fuer eine Person, die etwas Haushalt
+    erledigen, einkaufen und sich erholen moechte. Nutze keine Tools.
+  expected_output: >
+    Ein deutscher Plan fuer Samstag und Sonntag mit je drei einfachen Punkten.
+
+review_weekend_plan:
+  agent: reality_checker
+  context:
+    - draft_weekend_plan
+  description: >
+    Pruefe den Wochenendplan aus dem Kontext. Nutze keine Tools. Mache ihn
+    realistischer, falls er zu voll wirkt.
+  expected_output: >
+    Eine deutsche Review mit zwei guten Punkten, zwei Vereinfachungen und einem
+    ueberarbeiteten Wochenendplan.

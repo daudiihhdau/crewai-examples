@@ -1,0 +1,32 @@
+# Diese Datei ist eine kommentierte Vorlage. Sie zeigt alle Task-Felder, die in
+# den spaeteren Beispielen benutzt werden.
+
+erste_task:
+  # Muss auf eine Agent-ID aus agents.yaml zeigen.
+  agent: beispiel_agent
+
+  # Die eigentliche Aufgabenstellung. Hier kann auch stehen, welches Tool der
+  # Agent verwenden muss.
+  description: >
+    Bearbeite eine einfache Aufgabe. Rufe vorrats_check fuer 'Beispielgericht'
+    auf, bevor du antwortest.
+
+  # Erwartetes Ergebnis. Je konkreter dieses Feld ist, desto besser ist das
+  # Resultat im Vortrag vergleichbar.
+  expected_output: >
+    Eine kurze deutsche Antwort mit Zusammenfassung und naechstem Schritt.
+
+zweite_task:
+  agent: beispiel_agent
+
+  # Optional. Diese Task bekommt das Ergebnis aus erste_task als Kontext.
+  # Wichtig: erste_task muss weiter oben in dieser Datei stehen.
+  context:
+    - erste_task
+
+  description: >
+    Nutze den Kontext aus erste_task und formuliere daraus eine verbesserte
+    zweite Version.
+
+  expected_output: >
+    Eine ueberarbeitete deutsche Antwort mit kurzer Begruendung.

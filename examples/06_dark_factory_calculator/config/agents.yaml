@@ -1,0 +1,59 @@
+product_designer:
+  role: Produktdesigner
+  goal: Beschreibe einen sehr einfachen Python-Taschenrechner fuer Einsteiger.
+  backstory: >
+    Du denkst aus Nutzersicht. Du haeltst Anforderungen klein, klar und
+    realistisch, damit ein Coder sie direkt umsetzen kann.
+  tools:
+    - taschenrechner_anforderungen
+  llm:
+    model: anthropic/claude-3-5-haiku-20241022
+    model_env: CREWAI_LEICHTES_MODELL
+    temperature: 0.7
+    max_tokens: 1800
+  verbose: true
+
+coder:
+  role: Python-Coder
+  goal: Schreibe gut lesbaren Python-Code fuer den beschriebenen Taschenrechner.
+  backstory: >
+    Du schreibst einfachen Python-Code fuer Lernzwecke. Du bevorzugst klare
+    Funktionen, wenige Sonderfaelle und gut lesbare Fehlermeldungen.
+  tools:
+    - code_vorgaben
+  llm:
+    model: anthropic/claude-sonnet-4-20250514
+    model_env: CREWAI_STARKES_MODELL
+    temperature: 0.2
+    max_tokens: 2600
+  verbose: true
+
+tester:
+  role: Tester
+  goal: Entwirf einfache Testfaelle fuer den Taschenrechner.
+  backstory: >
+    Du testest die normalen Faelle und die wichtigsten Fehlerfaelle. Du denkst
+    praktisch und formulierst Tests so, dass Einsteiger sie nachvollziehen koennen.
+  tools:
+    - testfall_vorschlaege
+  llm:
+    model: anthropic/claude-3-5-haiku-20241022
+    model_env: CREWAI_LEICHTES_MODELL
+    temperature: 0.3
+    max_tokens: 1800
+  verbose: true
+
+qa_checker:
+  role: QA-Checker
+  goal: Pruefe, ob Anforderungen, Code und Tests zusammenpassen.
+  backstory: >
+    Du bist die letzte Station in der kleinen Software-Fabrik. Du suchst nach
+    fehlenden Funktionen, unklaren Fehlerfaellen und Abweichungen von der Aufgabe.
+  tools:
+    - taschenrechner_qa_check
+  llm:
+    model: anthropic/claude-sonnet-4-20250514
+    model_env: CREWAI_STARKES_MODELL
+    temperature: 0.1
+    max_tokens: 2200
+  verbose: true

@@ -1,0 +1,49 @@
+design_calculator:
+  agent: product_designer
+  description: >
+    Entwirf die Anforderungen fuer einen sehr einfachen Python-Taschenrechner.
+    Rufe taschenrechner_anforderungen fuer 'MiniCalc' auf. Halte die Anforderungen klein und
+    geeignet fuer Einsteiger.
+  expected_output: >
+    Eine deutsche Produktbeschreibung mit Funktionen, Eingaben, Ausgaben,
+    Fehlerfaellen und bewusst ausgeschlossenen Dingen.
+
+write_calculator_code:
+  agent: coder
+  context:
+    - design_calculator
+  description: >
+    Schreibe den Python-Code fuer den Taschenrechner auf Basis der Anforderungen.
+    Rufe code_vorgaben fuer 'Python' auf. Der Code soll nur Standardbibliothek
+    nutzen und aus genau einem Codeblock bestehen. Nutze eine Funktion
+    calculate(a: float, operator: str, b: float).
+  expected_output: >
+    Eine kurze deutsche Erklaerung plus genau ein Python-Codeblock mit
+    calculate, run_examples und einem if __name__ == "__main__"-Block.
+
+design_tests:
+  agent: tester
+  context:
+    - design_calculator
+    - write_calculator_code
+  description: >
+    Entwirf einfache Testfaelle fuer den Taschenrechner. Rufe
+    testfall_vorschlaege fuer 'MiniCalc' auf. Decke Addition, Subtraktion,
+    Multiplikation, Division, Division durch 0 und unbekannten Operator ab.
+  expected_output: >
+    Eine deutsche Liste mit Testfaellen, erwarteten Ergebnissen und kurzer
+    Begruendung.
+
+run_qa_check:
+  agent: qa_checker
+  context:
+    - design_calculator
+    - write_calculator_code
+    - design_tests
+  description: >
+    Pruefe das Ergebnis der kleinen Dark-Factory. Rufe taschenrechner_qa_check genau
+    einmal mit den Funktionsnamen auf, die im Code vorkommen sollen. Bewerte
+    danach, ob Produktbeschreibung, Code und Tests zusammenpassen.
+  expected_output: >
+    Ein deutscher QA-Bericht mit bestanden/nicht bestanden, zwei Staerken, bis
+    zu drei Risiken und einer finalen Empfehlung.

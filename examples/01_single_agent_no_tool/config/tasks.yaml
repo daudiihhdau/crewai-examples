@@ -1,0 +1,9 @@
+draft_shopping_list:
+  agent: shopping_helper
+  description: >
+    Erstelle einen kleinen Einkaufszettel fuer ein einfaches Abendessen fuer
+    zwei Personen. Nutze keine Tools. Das Essen soll schnell gehen, nicht teuer
+    sein und ohne besondere Kuechenausstattung funktionieren.
+  expected_output: >
+    Eine deutsche Antwort mit Gerichtsidee, Einkaufszettel, grober Reihenfolge
+    beim Kochen und einer Annahme, die du getroffen hast.

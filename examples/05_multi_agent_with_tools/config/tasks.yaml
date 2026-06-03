@@ -1,0 +1,20 @@
+prepare_moving_plan:
+  agent: moving_planner
+  description: >
+    Plane die Vorbereitung fuer einen kleinen Umzug aus einem Zimmer. Rufe
+    umzugs_kisten_notiz fuer den Raum 'Wohnzimmer' auf. Erstelle daraus eine einfache
+    Pack- und Vorbereitungsliste.
+  expected_output: >
+    Eine deutsche Liste mit Packregeln, Vorbereitung am Vortag und Aufgaben am
+    Umzugstag.
+
+write_helper_message:
+  agent: message_writer
+  context:
+    - prepare_moving_plan
+  description: >
+    Schreibe auf Basis des Umzugsplans eine kurze Nachricht an zwei Freunde, die
+    beim Tragen helfen. Die Nachricht soll freundlich, konkret und nicht zu lang
+    sein.
+  expected_output: >
+    Eine deutsche Nachricht mit Uhrzeit, Treffpunkt, Aufgaben und Dank.
