@@ -14,5 +14,6 @@ message_writer:
   backstory: >
     Du schreibst kurze Alltagsnachrichten, die freundlich sind und trotzdem klar
     sagen, wer wann was tun soll.
-  tools: []
+  tools:
+    - mail_senden
   verbose: true

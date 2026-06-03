@@ -139,6 +139,31 @@ class UmzugsKistenNotizTool(BaseTool):
         )
 
 
+class MailSendenInput(BaseModel):
+    empfaenger: list[str] = Field(..., description="Empfaenger der simulierten Mail.")
+    betreff: str = Field(..., description="Betreff der Mail.")
+    nachricht: str = Field(..., description="Nachrichtentext.")
+
+
+class MailSendenTool(BaseTool):
+    name: str = "mail_senden"
+    description: str = "Simuliert das Senden einer Mail und liefert eine Versandbestaetigung."
+    args_schema: Type[BaseModel] = MailSendenInput
+
+    def _run(self, empfaenger: list[str], betreff: str, nachricht: str) -> str:
+        zustellnummer = random.randint(100000, 999999)
+        zeichen = len(nachricht)
+        return (
+            f"{tool_lauf_info(self.name)}\n"
+            "Mail-Versand simuliert.\n"
+            f"- Empfaenger: {', '.join(empfaenger)}.\n"
+            f"- Betreff: {betreff}.\n"
+            f"- Nachrichtenlaenge: {zeichen} Zeichen.\n"
+            f"- Simulierte Versandnummer: MAIL-{zustellnummer}.\n"
+            "- Hinweis: Es wurde keine echte Mail verschickt."
+        )
+
+
 class TaschenrechnerAnforderungenInput(BaseModel):
     produkt: str = Field(..., description="Name des kleinen Produkts.")
 

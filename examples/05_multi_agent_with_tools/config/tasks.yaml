@@ -15,6 +15,8 @@ write_helper_message:
   description: >
     Schreibe auf Basis des Umzugsplans eine kurze Nachricht an zwei Freunde, die
     beim Tragen helfen. Die Nachricht soll freundlich, konkret und nicht zu lang
-    sein.
+    sein. Rufe danach mail_senden mit zwei Beispiel-Empfaengern, einem passenden
+    Betreff und deiner Nachricht auf.
   expected_output: >
-    Eine deutsche Nachricht mit Uhrzeit, Treffpunkt, Aufgaben und Dank.
+    Eine deutsche Nachricht mit Uhrzeit, Treffpunkt, Aufgaben und Dank plus die
+    Versandbestaetigung aus dem Tool.
