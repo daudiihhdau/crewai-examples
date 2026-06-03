@@ -4,6 +4,75 @@ Dieses Kapitel ist kein ausfuehrbares Crew-Beispiel, sondern die Erklaerstation
 fuer den Vortrag. Es zeigt alle Config-Felder, die in den spaeteren Beispielen
 verwendet werden.
 
+## Was ist CrewAI?
+
+CrewAI ist ein Python-Framework, mit dem man mehrere LLM-gestuetzte Agents zu
+einem Ablauf verbindet. Ein Agent bekommt eine Rolle, ein Ziel, eine Aufgabe und
+optional Tools. Mehrere Agents koennen nacheinander arbeiten und Ergebnisse an
+spaetere Tasks weitergeben.
+
+Ein einfaches Bild:
+
+```text
+Agent = Rolle + Ziel + Prompt + optional Tools
+Task = konkrete Aufgabe fuer einen Agent
+Crew = Sammlung aus Agents und Tasks
+Tool = Python-Funktion, die ein Agent gezielt aufrufen darf
+```
+
+## Wann benutzt man CrewAI?
+
+CrewAI lohnt sich, wenn eine Aufgabe nicht nur ein einzelner Prompt ist, sondern
+aus mehreren Schritten oder Rollen besteht. Besonders passend ist es, wenn man
+einen Ablauf erklaeren, strukturieren oder wiederholen moechte.
+
+Gute Anzeichen:
+
+- Es gibt mehrere Rollen, z. B. Planer, Schreiber, Tester, Reviewer.
+- Ein Zwischenergebnis soll an den naechsten Schritt weitergegeben werden.
+- Ein Agent soll echte Python-Tools verwenden, statt nur frei zu antworten.
+- Der Ablauf soll als Config sichtbar und im Vortrag gut erklaerbar sein.
+- Unterschiedliche Agents sollen unterschiedliche Modelle oder Temperaturen
+  nutzen.
+
+Weniger passend ist CrewAI, wenn eine einfache Chat-Antwort reicht oder wenn ein
+klassisches Skript ohne LLM schon eindeutig die beste Loesung ist.
+
+## Vorteile
+
+- Rollen und Aufgaben werden klar getrennt.
+- YAML-Configs machen Prompts und Ablauf gut sichtbar.
+- Tools verbinden LLM-Antworten mit echtem Python-Code.
+- Mehrstufige Aufgaben lassen sich leichter erklaeren und wiederholen.
+- Man kann pro Agent andere Tools, Modelle und Temperaturen verwenden.
+- Review- und QA-Schritte lassen sich als eigene Agents modellieren.
+
+## Nachteile
+
+- Mehr Komplexitaet als ein einzelner Prompt.
+- Mehr Modellaufrufe bedeuten meist mehr Kosten und Laufzeit.
+- Ergebnisse bleiben probabilistisch und muessen geprueft werden.
+- Zu viele Agents koennen den Ablauf unnoetig aufblaehen.
+- Tools und Config muessen sauber zusammenpassen, sonst scheitert der Lauf.
+- Fuer harte, deterministische Logik ist normaler Python-Code oft besser.
+
+## Geeignete Use-Cases
+
+- Schreibprozess mit Rollen: Entwurf, Review, Ueberarbeitung.
+- Kleine Coding-Workflows: Produktidee, Code, Tests, QA.
+- Support- oder Triage-Ablaufe mit Regeln und Datenquellen.
+- Recherche- und Zusammenfassungsworkflows mit mehreren Perspektiven.
+- Lern- und Vortragsbeispiele, bei denen man Agentenlogik sichtbar machen will.
+- Automatisierte Routinen, bei denen Tools echte Daten oder Berechnungen liefern.
+
+## Nicht ideale Use-Cases
+
+- Eine einmalige kurze Frage.
+- Aufgaben, die exakt deterministisch geloest werden muessen.
+- Prozesse, bei denen jede Antwort rechtlich, medizinisch oder finanziell
+  verbindlich sein muss, ohne menschliche Pruefung.
+- Kleine Skripte, bei denen ein direkter Python-Aufruf einfacher ist.
+
 ## Dateien
 
 - `agents.yaml`: beschreibt die Agents.
