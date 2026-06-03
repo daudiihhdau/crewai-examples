@@ -20,7 +20,7 @@ beispiel_agent:
   # Optional. Wenn dieses Feld fehlt, nutzt der Agent das globale CREWAI_MODEL.
   llm:
     # Fallback-Modell, falls model_env nicht gesetzt ist.
-    model: anthropic/claude-sonnet-4-20250514
+    model: anthropic/claude-sonnet-4-6
 
     # Optionaler Env-Override. Wenn gesetzt, gewinnt diese Umgebungsvariable.
     model_env: CREWAI_STARKES_MODELL

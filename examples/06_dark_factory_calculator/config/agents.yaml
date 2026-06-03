@@ -7,7 +7,7 @@ product_designer:
   tools:
     - taschenrechner_anforderungen
   llm:
-    model: anthropic/claude-3-5-haiku-20241022
+    model: anthropic/claude-haiku-4-5-20251001
     model_env: CREWAI_LEICHTES_MODELL
     temperature: 0.7
     max_tokens: 1800
@@ -22,7 +22,7 @@ coder:
   tools:
     - code_vorgaben
   llm:
-    model: anthropic/claude-sonnet-4-20250514
+    model: anthropic/claude-sonnet-4-6
     model_env: CREWAI_STARKES_MODELL
     temperature: 0.2
     max_tokens: 2600
@@ -37,7 +37,7 @@ tester:
   tools:
     - testfall_vorschlaege
   llm:
-    model: anthropic/claude-3-5-haiku-20241022
+    model: anthropic/claude-haiku-4-5-20251001
     model_env: CREWAI_LEICHTES_MODELL
     temperature: 0.3
     max_tokens: 1800
@@ -52,7 +52,7 @@ qa_checker:
   tools:
     - taschenrechner_qa_check
   llm:
-    model: anthropic/claude-sonnet-4-20250514
+    model: anthropic/claude-sonnet-4-6
     model_env: CREWAI_STARKES_MODELL
     temperature: 0.1
     max_tokens: 2200

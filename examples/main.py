@@ -21,7 +21,7 @@ from examples.tools import (
 )
 
 
-DEFAULT_MODEL = "anthropic/claude-sonnet-4-20250514"
+DEFAULT_MODEL = "anthropic/claude-sonnet-4-6"
 TOOL_REGISTRY = {
     "vorrats_check": VorratsCheckTool,
     "wetter_notiz": WetterNotizTool,

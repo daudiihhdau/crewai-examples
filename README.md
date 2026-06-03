@@ -137,11 +137,11 @@ $env:ANTHROPIC_API_KEY="sk-ant-..."
 Optional kannst du das Modell ueberschreiben:
 
 ```powershell
-$env:CREWAI_MODEL="anthropic/claude-sonnet-4-20250514"
+$env:CREWAI_MODEL="anthropic/claude-sonnet-4-6"
 ```
 
 Wenn `CREWAI_MODEL` nicht gesetzt ist, nutzt das Projekt
-`anthropic/claude-sonnet-4-20250514`.
+`anthropic/claude-sonnet-4-6`.
 
 ## Installation unter Linux/macOS
 
@@ -169,11 +169,11 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 Optional kannst du das Modell ueberschreiben:
 
 ```bash
-export CREWAI_MODEL="anthropic/claude-sonnet-4-20250514"
+export CREWAI_MODEL="anthropic/claude-sonnet-4-6"
 ```
 
 Wenn `CREWAI_MODEL` nicht gesetzt ist, nutzt das Projekt
-`anthropic/claude-sonnet-4-20250514`.
+`anthropic/claude-sonnet-4-6`.
 
 ## pyproject.toml starten und verstehen
 

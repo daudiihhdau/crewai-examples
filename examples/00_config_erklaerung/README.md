@@ -93,7 +93,7 @@ beispiel_agent:
   tools:
     - beispiel_tool
   llm:
-    model: anthropic/claude-sonnet-4-20250514
+    model: anthropic/claude-sonnet-4-6
     model_env: CREWAI_STARKES_MODELL
     temperature: 0.2
     max_tokens: 2200
