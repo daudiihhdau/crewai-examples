@@ -50,6 +50,56 @@ System, sondern ein einfacher Taschenrechner in Python.
 - Auch ein Coder-Beispiel sollte klein genug bleiben, damit man die CrewAI-Idee
   erkennt und nicht im Produkt selbst versinkt.
 
+## Ist das der normale CrewAI-Weg?
+
+Nicht immer. Der typische CrewAI-Ablauf ist erstmal linear:
+
+```text
+Agent A -> Task A
+Agent B -> Task B bekommt Kontext von Task A
+Agent C -> Task C bekommt Kontext von Task A und B
+```
+
+Das reicht fuer viele Beispiele. Man beschreibt Agents in `agents.yaml`, Tasks
+in `tasks.yaml` und verbindet Tasks ueber `context`.
+
+Die Coder-Tester-Schleife in diesem Beispiel ist bewusst fortgeschrittener. Sie
+steht nicht nur in YAML, sondern in `examples/main.py`, weil Python entscheiden
+muss:
+
+- Wie viele Runden sind erlaubt?
+- Welches Tester-Feedback bekommt der Coder in der naechsten Runde?
+- Wann ist das Ziel erreicht?
+- Was passiert bei Fehlern?
+
+Best Practice:
+
+```text
+Einfacher Ablauf:
+    YAML-Tasks mit context reichen.
+
+Mehrstufige Pipeline:
+    mehrere Tasks nacheinander in YAML.
+
+Feedback-Schleife:
+    Python-Orchestrierung um CrewAI herum.
+
+Harte Qualitaetspruefung:
+    echte Tools, Tests oder Validatoren ausfuehren.
+```
+
+Diese Schleife lohnt sich hier, weil es ein klares Abbruchkriterium gibt:
+
+```text
+UNIT_TEST_STATUS: PASS
+und
+LINT_STATUS: PASS
+```
+
+Ohne klares Kriterium koennen Agentenschleifen schnell unklar werden. Dann
+diskutieren Agents nur weiter, ohne dass das System sicher weiss, wann es fertig
+ist.
+
 ## Modelle anpassen
 
 In `config/agents.yaml` stehen pro Agent eigene `llm`-Einstellungen. Du kannst
