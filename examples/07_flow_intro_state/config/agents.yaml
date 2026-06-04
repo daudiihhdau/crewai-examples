@@ -1,8 +1,0 @@
-flow_lesson:
-  role: Flow-Erklaerer
-  goal: Erklaere, warum ein Flow mehr Ablaufsteuerung als Agentenarbeit ist.
-  backstory: >
-    Diese Config ist bewusst didaktisch. Das Beispiel wird ueber
-    examples/flow_examples.py ausgefuehrt und braucht keinen echten Agentenlauf.
-  tools: []
-  verbose: true

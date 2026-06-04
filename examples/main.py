@@ -69,20 +69,20 @@ EXAMPLES = {
         "aliases": ["coder", "calculator", "dark-factory"],
     },
     "07": {
-        "config_dir": Path(__file__).parent / "07_flow_intro_state" / "config",
-        "aliases": ["flow-intro", "flow-state"],
+        "config_dir": Path(__file__).parent / "07_morgenroutine_flow" / "config",
+        "aliases": ["morgenroutine", "flow-intro", "flow-state"],
     },
     "08": {
-        "config_dir": Path(__file__).parent / "08_flow_branching" / "config",
-        "aliases": ["flow-branching", "branching"],
+        "config_dir": Path(__file__).parent / "08_wochenendplan_branching" / "config",
+        "aliases": ["wochenendplan", "flow-branching", "branching"],
     },
     "09": {
-        "config_dir": Path(__file__).parent / "09_flow_loop_validation" / "config",
-        "aliases": ["flow-loop", "validation-loop"],
+        "config_dir": Path(__file__).parent / "09_einkaufsliste_validation_loop" / "config",
+        "aliases": ["einkaufsliste", "flow-loop", "validation-loop"],
     },
     "10": {
-        "config_dir": Path(__file__).parent / "10_flow_orchestrates_crews" / "config",
-        "aliases": ["flow-crews", "orchestration"],
+        "config_dir": Path(__file__).parent / "10_geburtstagsfeier_flow_crews" / "config",
+        "aliases": ["geburtstag", "flow-crews", "orchestration"],
     },
 }
 EXAMPLE_CHOICES = sorted(

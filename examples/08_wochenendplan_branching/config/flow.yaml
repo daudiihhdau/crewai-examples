@@ -1,0 +1,19 @@
+name: wochenendplan_branching
+level: 08
+topic: Wochenendplan mit Abzweigung
+use_case: >
+  Samstagvormittag planen, abhaengig von Regen und Budget.
+concepts:
+  - Branching
+  - State-basierte Entscheidung
+  - alltagsnahe Routen
+inputs:
+  regen_chance: zufaellige Prozentzahl
+  budget: zufaelliger Euro-Wert
+branches:
+  drinnen: Pfannkuchen, Waesche, Filmabend vorbereiten
+  sparsam: Thermoskanne, Brote, Bibliothek
+  draussen: Wochenmarkt, Spielplatz, Parkrunde
+takeaway: >
+  Ein Flow ist passend, wenn ein Plan anhand einfacher Fakten einen anderen Weg
+  nehmen soll.

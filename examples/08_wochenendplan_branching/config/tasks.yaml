@@ -1,0 +1,7 @@
+explain_wochenend_branching:
+  agent: wochenendplaner
+  description: >
+    Erklaere, wie ein Flow anhand von Regenwahrscheinlichkeit und Budget
+    zwischen drinnen, sparsam und draussen waehlt.
+  expected_output: >
+    Eine kurze deutsche Erklaerung mit drei alltagsnahen Pfaden.

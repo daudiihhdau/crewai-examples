@@ -1,0 +1,22 @@
+name: geburtstagsfeier_flow_crews
+level: 10
+topic: Geburtstagsfeier mit Flow als Rahmen
+use_case: >
+  Kindergeburtstag von 15:00 bis 18:00 planen: Kuchen, Spiele, Einkauf,
+  Helfer und Nachricht an Eltern.
+concepts:
+  - Flow-State
+  - Crew als Teilprozess
+  - Validator
+  - Routing
+  - finale Nachricht
+flow_shape:
+  start: Wunsch aufnehmen
+  crew_1: Planungs-Crew fuer Kuchen, Spiele, Einkauf und Aufgaben
+  validator: Budget, Zeit und Helfer pruefen
+  on_fail: zur Planung zurueck
+  on_pass: Nachricht an Eltern schreiben
+  crew_2: kurze Elternnachricht formulieren
+takeaway: >
+  In groesseren Alltagsablaeufen steuert der Flow den Prozess, waehrend Crews
+  einzelne Rollenaufgaben uebernehmen.

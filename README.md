@@ -8,7 +8,8 @@ Python-Taschenrechner.
 
 Die Beispiele werden Schritt fuer Schritt anspruchsvoller und sind jeweils
 getrennt: eigene README, eigene Config und eigener Lernfokus. Ab Beispiel 07
-kommen Flow-Beispiele hinzu, die Ablaufsteuerung, Branching und Loops erklaeren.
+kommen lebensnahe Flow-Beispiele hinzu: Morgenroutine, Wochenendplan,
+Einkaufsliste und Geburtstagsfeier.
 
 Wichtig: Claude Code selbst ist kein CrewAI-Modell-Endpunkt. Claude Code kann
 dir beim Bearbeiten und Starten dieses Projekts helfen, aber CrewAI braucht zum
@@ -292,10 +293,10 @@ crewai-examples weekend
 crewai-examples moving
 crewai-examples coder
 crewai-examples calculator
-crewai-examples flow-intro
-crewai-examples flow-branching
-crewai-examples flow-loop
-crewai-examples flow-crews
+crewai-examples morgenroutine
+crewai-examples wochenendplan
+crewai-examples einkaufsliste
+crewai-examples geburtstag
 ```
 
 Alternativ geht der Start direkt als Python-Modul:
@@ -329,10 +330,10 @@ crewai-examples weekend
 crewai-examples moving
 crewai-examples coder
 crewai-examples calculator
-crewai-examples flow-intro
-crewai-examples flow-branching
-crewai-examples flow-loop
-crewai-examples flow-crews
+crewai-examples morgenroutine
+crewai-examples wochenendplan
+crewai-examples einkaufsliste
+crewai-examples geburtstag
 ```
 
 Alternativ geht der Start direkt als Python-Modul:
@@ -352,19 +353,20 @@ python3 -m examples.main 01
 6. `06_dark_factory_calculator`: Dark-Factory mit Produktdesigner, Coder, Tester,
    QA-Checker, echter Coder-Tester-Schleife, echten Unit-Tests, echtem Linting
    sowie unterschiedlichen Modellen und Temperaturen pro Agent.
-7. `07_flow_intro_state`: Einstieg in Flows mit State und klaren Schritten.
-8. `08_flow_branching`: Flow mit bedingtem Pfad, z. B. drinnen, sparsam oder
-   draussen.
-9. `09_flow_loop_validation`: Flow mit Wiederholung bis ein Validator PASS
-   meldet.
-10. `10_flow_orchestrates_crews`: Flow als Rahmen um Crews, Validatoren und
-    Routing.
+7. `07_morgenroutine_flow`: morgens puenktlich loskommen, mit State als
+   Notizzettel.
+8. `08_wochenendplan_branching`: Samstag planen, mit Abzweigung nach Regen und
+   Budget.
+9. `09_einkaufsliste_validation_loop`: Einkaufsliste wiederholen, bis sie ins
+   Budget passt.
+10. `10_geburtstagsfeier_flow_crews`: Kindergeburtstag planen, mit Flow als
+    Rahmen um Planung, Pruefung und Elternnachricht.
 
 Die Idee: Erst Rollen und Tasks verstehen, dann Zusammenarbeit, danach Tools,
 danach mehrere Tools, danach mehrere Agents mit Kontext, zuletzt eine kleine
 Software-Dark-Factory mit agentenspezifischem Modell-Setup. Danach wird der
-Blick groesser: Flows erklaeren, wie man Crews, Tools und normalen Python-Code
-zu robusteren Workflows verbindet.
+Blick groesser: Lebensnahe Flows zeigen, wie man Crews, Tools und normalen
+Python-Code zu robusteren Workflows verbindet.
 
 ## Projektstruktur
 
@@ -409,25 +411,25 @@ examples/
     config/
       agents.yaml
       tasks.yaml
-  07_flow_intro_state/
+  07_morgenroutine_flow/
     README.md
     config/
       agents.yaml
       tasks.yaml
       flow.yaml
-  08_flow_branching/
+  08_wochenendplan_branching/
     README.md
     config/
       agents.yaml
       tasks.yaml
       flow.yaml
-  09_flow_loop_validation/
+  09_einkaufsliste_validation_loop/
     README.md
     config/
       agents.yaml
       tasks.yaml
       flow.yaml
-  10_flow_orchestrates_crews/
+  10_geburtstagsfeier_flow_crews/
     README.md
     config/
       agents.yaml
@@ -440,8 +442,9 @@ examples/
 - `examples/main.py` ist der Runner. Er nimmt das CLI-Argument entgegen, laedt
   die passende YAML-Config und startet die Crew.
 - `examples/flow_examples.py` enthaelt die didaktischen Flow-Beispiele ab 07.
-  Sie zeigen State, Branching, Loops und Flow-Orchestrierung ohne zusaetzliche
-  Modellaufrufe, damit der Ablauf selbst im Vordergrund steht.
+  Sie zeigen State, Branching, Loops und Flow-Orchestrierung an alltagsnahen
+  Situationen ohne zusaetzliche Modellaufrufe, damit der Ablauf selbst im
+  Vordergrund steht.
 - `examples/tools.py` enthaelt alle eigenen Tools. Tools sind Python-Code, weil
   sie echte Logik ausfuehren. Viele Tools erzeugen Lauf-IDs, Uhrzeiten,
   Zufallswerte oder kleine Berechnungen, damit im Vortrag sichtbar wird, dass

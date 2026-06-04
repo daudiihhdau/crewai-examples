@@ -1,7 +1,0 @@
-explain_flow_branching:
-  agent: flow_lesson
-  description: >
-    Erklaere, warum ein Flow bei Regen, Budget oder anderen Bedingungen einen
-    anderen Pfad waehlen kann.
-  expected_output: >
-    Eine kurze deutsche Erklaerung mit drei moeglichen Pfaden.

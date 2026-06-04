@@ -30,40 +30,40 @@ def run_steps(state: FlowState, steps: list[Callable[[FlowState], None]]) -> str
 
 
 def run_07_flow_intro() -> str:
-    state = FlowState(title="07 Flow Intro")
+    state = FlowState(title="07 Morgenroutine")
 
     def start(state: FlowState) -> None:
-        state.remember("ziel", "Eine einfache Tagesplanung erstellen.")
+        state.remember("ziel", "Morgens puenktlich aus dem Haus kommen.")
         state.remember("zeit", datetime.now().strftime("%H:%M:%S"))
 
     def prepare_data(state: FlowState) -> None:
-        state.remember("termine", ["Einkauf", "Waesche", "15 Minuten Spaziergang"])
+        state.remember("fixpunkte", ["Bus um 08:12", "Brotbox packen", "Muellsack mitnehmen"])
+        state.remember("puffer_minuten", 12)
 
     def finish(state: FlowState) -> None:
-        termine = ", ".join(state.values["termine"])
-        state.remember("ergebnis", f"Heute erledigen: {termine}.")
+        fixpunkte = ", ".join(state.values["fixpunkte"])
+        state.remember("ergebnis", f"07:35 starten: {fixpunkte}. Puffer bleibt erhalten.")
 
     return "\n\n".join(
         [
-            "# 07 Flow Intro",
+            "# 07 Morgenroutine als Flow",
             section(
-                "Idee",
-                "Ein Flow ist Ablaufsteuerung mit Zustand. In diesem Beispiel gibt es "
-                "noch keine Agenten, sondern nur klar benannte Schritte.",
+                "Alltagssituation",
+                "Eine Morgenroutine hat feste Schritte: erst Ziel klaeren, dann "
+                "Fixpunkte sammeln, dann eine einfache Reihenfolge bauen.",
             ),
             section("Ablauf", run_steps(state, [start, prepare_data, finish])),
             section(
-                "Unterschied zur Crew",
-                "Eine Crew wuerde mehrere Tasks an Agents geben. Der Flow entscheidet "
-                "hier selbst, welche Schritte in welcher Reihenfolge laufen und welche "
-                "Daten im State gespeichert werden.",
+                "Was man daran lernt",
+                "Der Flow merkt sich kleine Fakten im State. Das ist praktisch, wenn "
+                "ein Ablauf nicht kreativ, sondern verlaesslich und geordnet sein soll.",
             ),
         ]
     )
 
 
 def run_08_flow_branching() -> str:
-    state = FlowState(title="08 Flow Branching")
+    state = FlowState(title="08 Wochenendplan")
 
     def start(state: FlowState) -> None:
         state.remember("regen_chance", random.randint(10, 90))
@@ -80,32 +80,32 @@ def run_08_flow_branching() -> str:
     def execute_branch(state: FlowState) -> None:
         route = state.values["route"]
         plans = {
-            "drinnen": "Kaffee zu Hause, Waesche, kurzer Anruf.",
-            "sparsam": "Spaziergang, Brote vorbereiten, Bibliothek.",
-            "draussen": "Markt, kleiner Imbiss, Parkrunde.",
+            "drinnen": "Pfannkuchen machen, Waesche starten, Filmabend vorbereiten.",
+            "sparsam": "Thermoskanne fuellen, Brote schmieren, Bibliothek und Parkbank.",
+            "draussen": "Wochenmarkt, Spielplatzrunde, kleiner Imbiss.",
         }
         state.remember("plan", plans[route])
 
     return "\n\n".join(
         [
-            "# 08 Flow mit Branching",
+            "# 08 Wochenendplan mit Abzweigung",
             section(
-                "Idee",
-                "Ein Flow kann anhand von Daten einen Pfad waehlen. Hier entscheiden "
-                "Regenwahrscheinlichkeit und Budget ueber den Tagesplan.",
+                "Alltagssituation",
+                "Samstagvormittag soll geplant werden. Je nach Regen und Budget nimmt "
+                "der Flow einen anderen Weg.",
             ),
             section("Ablauf", run_steps(state, [start, choose_branch, execute_branch])),
             section(
-                "Warum man das braucht",
-                "Bei Crews laeuft eine Task-Liste meist linear. Bei Flows kann der "
-                "Ablauf zur Laufzeit anders abbiegen.",
+                "Was man daran lernt",
+                "Branching ist nuetzlich, wenn ein Plan nicht immer gleich sein soll. "
+                "Der State enthaelt die Fakten, die Route waehlt den passenden Alltagspfad.",
             ),
         ]
     )
 
 
 def run_09_flow_loop_validation() -> str:
-    state = FlowState(title="09 Flow Loop Validation")
+    state = FlowState(title="09 Einkaufsliste pruefen")
     max_rounds = 5
 
     def estimate_cart() -> dict[str, Any]:
@@ -130,45 +130,43 @@ def run_09_flow_loop_validation() -> str:
 
     return "\n\n".join(
         [
-            "# 09 Flow mit Validierungsloop",
+            "# 09 Einkaufsliste mit Budgetpruefung",
             section(
-                "Idee",
-                "Ein Flow kann einen Schritt wiederholen, bis ein Validator gruen ist. "
-                "Das ist die einfache Form des Ping-Pong-Musters aus Beispiel 06.",
+                "Alltagssituation",
+                "Beim Einkaufen soll die Liste unter 18 Euro bleiben. Wenn der "
+                "Warenkorb zu teuer ist, versucht der Flow es erneut.",
             ),
             section("Ablauf", "\n".join(f"- {entry}" for entry in state.log)),
             section(
-                "Warum man das braucht",
-                "Loops lohnen sich, wenn es eine harte Bedingung gibt: Budget passt, "
-                "Tests bestehen, JSON ist gueltig oder Pflichtfelder sind vollstaendig.",
+                "Was man daran lernt",
+                "Ein Loop braucht ein klares Ende. Hier entscheidet nicht ein Agent "
+                "nach Gefuehl, sondern die Bedingung: Summe kleiner oder gleich Budget.",
             ),
         ]
     )
 
 
 def run_10_flow_orchestrates_crews() -> str:
-    state = FlowState(title="10 Flow orchestriert Crews")
-    state.remember("eingang", "Kleine Geburtstagsfeier am Samstag planen.")
-    state.remember("crew_1", "Planungs-Crew erstellt Einkauf, Ablauf und Aufgaben.")
-    state.remember("validator", "Budget, Zeit und Anzahl Helfer werden geprueft.")
-    state.remember("route", "Bei Fehlern zur Planungs-Crew zurueck, sonst zur Zusammenfassung.")
-    state.remember("crew_2", "Zusammenfassungs-Crew schreibt die finale Nachricht.")
+    state = FlowState(title="10 Geburtstagsfeier")
+    state.remember("eingang", "Kindergeburtstag am Samstag von 15:00 bis 18:00 planen.")
+    state.remember("crew_1", "Planungs-Crew klaert Kuchen, Spiele, Einkauf und Aufgaben.")
+    state.remember("validator", "Budget 60 Euro, 3 Stunden Zeit und 2 Helfer werden geprueft.")
+    state.remember("route", "Bei Problemen zur Planung zurueck, sonst Einladungstext schreiben.")
+    state.remember("crew_2", "Nachrichten-Crew formuliert eine kurze Info an die Eltern.")
 
     return "\n\n".join(
         [
-            "# 10 Flow orchestriert Crews",
+            "# 10 Geburtstagsfeier mit Flow und Crews",
             section(
-                "Idee",
-                "In produktiven Setups ist ein Flow oft der Rahmen um mehrere Crews. "
-                "Die Crews erledigen Denk- oder Schreibarbeit, der Flow entscheidet "
-                "ueber Reihenfolge, Wiederholung, Abbruch und Uebergabe.",
+                "Alltagssituation",
+                "Eine kleine Feier hat mehrere Baustellen: Essen, Spiele, Helfer, "
+                "Budget und Nachricht an die Eltern. Der Flow haelt das zusammen.",
             ),
             section("Pseudo-Ablauf", "\n".join(f"- {entry}" for entry in state.log)),
             section(
-                "CrewAI-Form",
-                "In echtem CrewAI wuerde man dafuer Flow-State, Start-Schritte, "
-                "Listener und Router verwenden. Dieses Beispiel haelt es bewusst "
-                "didaktisch, damit zuerst das Muster klar wird.",
+                "Was man daran lernt",
+                "Crews koennen Teilaufgaben erledigen. Der Flow entscheidet, ob der "
+                "Plan schon alltagstauglich ist oder noch einmal ueberarbeitet wird.",
             ),
         ]
     )

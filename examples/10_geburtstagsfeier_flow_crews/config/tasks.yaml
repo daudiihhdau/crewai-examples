@@ -1,0 +1,7 @@
+explain_geburtstag_orchestration:
+  agent: feierplaner
+  description: >
+    Erklaere, wie ein Flow eine Geburtstagsplanung mit Planungs-Crew,
+    Validator und Elternnachricht zusammenhaelt.
+  expected_output: >
+    Eine deutsche Architektur-Erklaerung mit alltagsnahem Ablauf.

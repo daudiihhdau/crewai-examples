@@ -1,0 +1,7 @@
+explain_morgenroutine_flow:
+  agent: morgenplaner
+  description: >
+    Erklaere, wie eine Morgenroutine mit Buszeit, Brotbox und Muellsack als
+    einfacher Flow mit State modelliert wird.
+  expected_output: >
+    Eine kurze deutsche Erklaerung mit alltagsnahem Pseudo-Ablauf.

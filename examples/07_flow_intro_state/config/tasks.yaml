@@ -1,7 +1,0 @@
-explain_flow_state:
-  agent: flow_lesson
-  description: >
-    Erklaere den Unterschied zwischen einem linearen CrewAI-Task-Ablauf und
-    einem Flow mit gemeinsamem State.
-  expected_output: >
-    Eine kurze deutsche Erklaerung mit Pseudo-Ablauf.

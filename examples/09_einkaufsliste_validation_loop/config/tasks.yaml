@@ -1,0 +1,7 @@
+explain_einkauf_loop:
+  agent: einkaufsplaner
+  description: >
+    Erklaere, wie eine Einkaufsliste so lange neu versucht wird, bis sie unter
+    18 Euro bleibt oder die maximale Rundenzahl erreicht ist.
+  expected_output: >
+    Eine kurze deutsche Erklaerung mit PASS/FAIL-Kriterium.

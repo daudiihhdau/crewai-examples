@@ -1,0 +1,22 @@
+name: morgenroutine_flow
+level: 07
+topic: Morgenroutine mit State
+use_case: >
+  Puenktlich zum Bus kommen und morgens nichts Wichtiges vergessen.
+concepts:
+  - Flow als Ablaufsteuerung
+  - gemeinsamer State als Notizzettel
+  - lineare Schritte ohne Agenten
+steps:
+  - start
+  - fixpunkte_sammeln
+  - plan_bauen
+state_examples:
+  buszeit: "08:12"
+  aufgaben:
+    - Brotbox packen
+    - Schluessel pruefen
+    - Muellsack mitnehmen
+takeaway: >
+  Ein Flow kann auch ohne Agenten sinnvoll sein, wenn ein kleiner Ablauf
+  verlaesslich geordnet werden soll.

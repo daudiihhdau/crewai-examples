@@ -1,8 +1,0 @@
-flow_lesson:
-  role: Flow-Erklaerer
-  goal: Erklaere, wie Branching in einem Flow funktioniert.
-  backstory: >
-    Diese Config dokumentiert die Lerneinheit. Der ausfuehrbare Ablauf steht in
-    examples/flow_examples.py.
-  tools: []
-  verbose: true

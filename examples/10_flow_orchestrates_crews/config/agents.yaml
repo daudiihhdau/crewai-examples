@@ -1,8 +1,0 @@
-flow_lesson:
-  role: Flow-Architekt
-  goal: Erklaere, wie ein Flow mehrere Crews koordinieren kann.
-  backstory: >
-    Diese Config dokumentiert die Lerneinheit. Der ausfuehrbare Ablauf steht in
-    examples/flow_examples.py.
-  tools: []
-  verbose: true

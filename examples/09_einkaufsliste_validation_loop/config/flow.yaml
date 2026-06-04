@@ -1,0 +1,18 @@
+name: einkaufsliste_validation_loop
+level: 09
+topic: Einkaufsliste mit Budget-Validator
+use_case: >
+  Einen kleinen Einkauf planen, der maximal 18 Euro kosten darf.
+concepts:
+  - Loop
+  - Validator
+  - Abbruchkriterium
+  - maximale Rundenzahl
+state:
+  budget: 18
+  status: PASS oder FAIL
+max_rounds: 5
+pass_condition: warenkorb_summe <= budget
+takeaway: >
+  Wiederholung ist sinnvoll, wenn ein alltagsnahes Ergebnis eine harte Bedingung
+  erfuellen muss.
