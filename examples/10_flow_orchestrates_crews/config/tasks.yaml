@@ -1,0 +1,7 @@
+explain_flow_orchestration:
+  agent: flow_lesson
+  description: >
+    Erklaere, wie ein Flow mehrere Crews, Validatoren und Routing-Entscheidungen
+    zusammenhalten kann.
+  expected_output: >
+    Eine deutsche Architektur-Erklaerung mit Crew, Process und Flow.

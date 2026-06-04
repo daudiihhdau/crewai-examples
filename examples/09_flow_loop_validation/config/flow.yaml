@@ -1,0 +1,15 @@
+name: flow_loop_validation
+level: 09
+topic: Wiederholen bis Validator PASS meldet
+concepts:
+  - Loop
+  - Validator
+  - Abbruchkriterium
+  - maximale Rundenzahl
+state:
+  budget: 18
+  status: PASS oder FAIL
+max_rounds: 5
+pass_condition: total <= budget
+takeaway: >
+  Nutze Loops nur mit klarer Abbruchbedingung und Rundengrenze.

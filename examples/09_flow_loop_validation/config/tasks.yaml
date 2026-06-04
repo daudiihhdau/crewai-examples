@@ -1,0 +1,7 @@
+explain_flow_loop:
+  agent: flow_lesson
+  description: >
+    Erklaere, warum ein Flow fuer Wiederholung mit Validator besser geeignet ist
+    als eine rein lineare Task-Liste.
+  expected_output: >
+    Eine kurze deutsche Erklaerung mit PASS/FAIL-Kriterium.

@@ -1,0 +1,19 @@
+name: flow_orchestrates_crews
+level: 10
+topic: Flow als Rahmen um Crews
+concepts:
+  - Flow-State
+  - Crew als Subprozess
+  - Validator
+  - Routing
+  - finale Zusammenfassung
+flow_shape:
+  start: Wunsch aufnehmen
+  crew_1: Planungs-Crew
+  validator: Budget, Zeit und Helfer pruefen
+  on_fail: zur Planungs-Crew zurueck
+  on_pass: zur Zusammenfassungs-Crew
+  crew_2: finale Nachricht schreiben
+takeaway: >
+  In groesseren Projekten steuern Flows die Prozesslogik, waehrend Crews die
+  eigentliche Agentenarbeit erledigen.

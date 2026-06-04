@@ -77,10 +77,13 @@ klassisches Skript ohne LLM schon eindeutig die beste Loesung ist.
 
 - `agents.yaml`: beschreibt die Agents.
 - `tasks.yaml`: beschreibt die Tasks.
+- `flow.yaml`: beschreibt ab Beispiel 07 den Lernfokus eines Flow-Beispiels,
+  z. B. Schritte, Branches, Validatoren oder Abbruchkriterien.
 
 Die echten Beispiele verwenden dieselbe Struktur, aber meist nur einen Teil der
 Felder. Im letzten Beispiel kommen dann alle fortgeschritteneren Felder zusammen:
-Tools, Task-Kontext und eigene LLM-Einstellungen pro Agent.
+Tools, Task-Kontext und eigene LLM-Einstellungen pro Agent. Ab Beispiel 07
+kommt `flow.yaml` als didaktische Flow-Beschreibung dazu.
 
 ## agents.yaml
 
@@ -168,6 +171,11 @@ Runner fuehrt nach der Coder-Rolle echtes Linting und echte Unit-Tests aus,
 gibt die Ergebnisse an den Tester weiter und startet den Coder bei Fehlern
 erneut. Solche Ablaufregeln gehoeren bewusst in Python, weil YAML hier nur
 Rollen, Aufgaben und erlaubte Tools beschreibt.
+
+Ab Beispiel 07 liegen die ausfuehrbaren Flow-Beispiele in
+`examples/flow_examples.py`. Dort steht bewusst Python-Code fuer State,
+Branching und Loops. Die Datei `flow.yaml` erklaert nur den Lernfokus, damit der
+Vortrag die Konzepte getrennt zeigen kann.
 
 Das Tool `bash_befehl_ausfuehren` ist ein Sonderfall: Es kann beliebige
 Bash-Kommandos starten, auch Installationsbefehle wie `pip install ...`. Das

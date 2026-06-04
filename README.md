@@ -7,7 +7,8 @@ ist eine kleine Dark-Factory fuer Software: mehrere Agents bauen gemeinsam einen
 Python-Taschenrechner.
 
 Die Beispiele werden Schritt fuer Schritt anspruchsvoller und sind jeweils
-getrennt: eigene README, eigene Agent-Config, eigene Task-Config.
+getrennt: eigene README, eigene Config und eigener Lernfokus. Ab Beispiel 07
+kommen Flow-Beispiele hinzu, die Ablaufsteuerung, Branching und Loops erklaeren.
 
 Wichtig: Claude Code selbst ist kein CrewAI-Modell-Endpunkt. Claude Code kann
 dir beim Bearbeiten und Starten dieses Projekts helfen, aber CrewAI braucht zum
@@ -275,6 +276,10 @@ crewai-examples 03
 crewai-examples 04
 crewai-examples 05
 crewai-examples 06
+crewai-examples 07
+crewai-examples 08
+crewai-examples 09
+crewai-examples 10
 ```
 
 Aliases funktionieren ebenfalls:
@@ -287,6 +292,10 @@ crewai-examples weekend
 crewai-examples moving
 crewai-examples coder
 crewai-examples calculator
+crewai-examples flow-intro
+crewai-examples flow-branching
+crewai-examples flow-loop
+crewai-examples flow-crews
 ```
 
 Alternativ geht der Start direkt als Python-Modul:
@@ -304,6 +313,10 @@ crewai-examples 03
 crewai-examples 04
 crewai-examples 05
 crewai-examples 06
+crewai-examples 07
+crewai-examples 08
+crewai-examples 09
+crewai-examples 10
 ```
 
 Aliases funktionieren ebenfalls:
@@ -316,6 +329,10 @@ crewai-examples weekend
 crewai-examples moving
 crewai-examples coder
 crewai-examples calculator
+crewai-examples flow-intro
+crewai-examples flow-branching
+crewai-examples flow-loop
+crewai-examples flow-crews
 ```
 
 Alternativ geht der Start direkt als Python-Modul:
@@ -335,10 +352,19 @@ python3 -m examples.main 01
 6. `06_dark_factory_calculator`: Dark-Factory mit Produktdesigner, Coder, Tester,
    QA-Checker, echter Coder-Tester-Schleife, echten Unit-Tests, echtem Linting
    sowie unterschiedlichen Modellen und Temperaturen pro Agent.
+7. `07_flow_intro_state`: Einstieg in Flows mit State und klaren Schritten.
+8. `08_flow_branching`: Flow mit bedingtem Pfad, z. B. drinnen, sparsam oder
+   draussen.
+9. `09_flow_loop_validation`: Flow mit Wiederholung bis ein Validator PASS
+   meldet.
+10. `10_flow_orchestrates_crews`: Flow als Rahmen um Crews, Validatoren und
+    Routing.
 
 Die Idee: Erst Rollen und Tasks verstehen, dann Zusammenarbeit, danach Tools,
 danach mehrere Tools, danach mehrere Agents mit Kontext, zuletzt eine kleine
-Software-Dark-Factory mit agentenspezifischem Modell-Setup.
+Software-Dark-Factory mit agentenspezifischem Modell-Setup. Danach wird der
+Blick groesser: Flows erklaeren, wie man Crews, Tools und normalen Python-Code
+zu robusteren Workflows verbindet.
 
 ## Projektstruktur
 
@@ -383,12 +409,39 @@ examples/
     config/
       agents.yaml
       tasks.yaml
+  07_flow_intro_state/
+    README.md
+    config/
+      agents.yaml
+      tasks.yaml
+      flow.yaml
+  08_flow_branching/
+    README.md
+    config/
+      agents.yaml
+      tasks.yaml
+      flow.yaml
+  09_flow_loop_validation/
+    README.md
+    config/
+      agents.yaml
+      tasks.yaml
+      flow.yaml
+  10_flow_orchestrates_crews/
+    README.md
+    config/
+      agents.yaml
+      tasks.yaml
+      flow.yaml
 ```
 
 ## Was wo passiert
 
 - `examples/main.py` ist der Runner. Er nimmt das CLI-Argument entgegen, laedt
   die passende YAML-Config und startet die Crew.
+- `examples/flow_examples.py` enthaelt die didaktischen Flow-Beispiele ab 07.
+  Sie zeigen State, Branching, Loops und Flow-Orchestrierung ohne zusaetzliche
+  Modellaufrufe, damit der Ablauf selbst im Vordergrund steht.
 - `examples/tools.py` enthaelt alle eigenen Tools. Tools sind Python-Code, weil
   sie echte Logik ausfuehren. Viele Tools erzeugen Lauf-IDs, Uhrzeiten,
   Zufallswerte oder kleine Berechnungen, damit im Vortrag sichtbar wird, dass
@@ -408,6 +461,8 @@ examples/
   `llm`-Profil mit Modell, Temperatur und Tokenlimit.
 - `tasks.yaml` beschreibt Aufgaben, erwartete Ergebnisse und optionalen
   Task-Kontext.
+- `flow.yaml` beschreibt ab Beispiel 07 den Flow-Fokus der Lerneinheit:
+  Schritte, Branches, Validatoren oder Orchestrierung.
 - Jede Beispiel-README erklaert Lernziel, Besonderheiten und Takeaways.
 
 ## Eigene Beispiele anlegen

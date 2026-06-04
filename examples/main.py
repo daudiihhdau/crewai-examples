@@ -9,6 +9,7 @@ from typing import Any
 import yaml
 from crewai import Agent, Crew, LLM, Process, Task
 
+from examples.flow_examples import FLOW_EXAMPLE_RUNNERS
 from examples.tools import (
     BashBefehlAusfuehrenTool,
     BudgetNotizTool,
@@ -66,6 +67,22 @@ EXAMPLES = {
     "06": {
         "config_dir": Path(__file__).parent / "06_dark_factory_calculator" / "config",
         "aliases": ["coder", "calculator", "dark-factory"],
+    },
+    "07": {
+        "config_dir": Path(__file__).parent / "07_flow_intro_state" / "config",
+        "aliases": ["flow-intro", "flow-state"],
+    },
+    "08": {
+        "config_dir": Path(__file__).parent / "08_flow_branching" / "config",
+        "aliases": ["flow-branching", "branching"],
+    },
+    "09": {
+        "config_dir": Path(__file__).parent / "09_flow_loop_validation" / "config",
+        "aliases": ["flow-loop", "validation-loop"],
+    },
+    "10": {
+        "config_dir": Path(__file__).parent / "10_flow_orchestrates_crews" / "config",
+        "aliases": ["flow-crews", "orchestration"],
     },
 }
 EXAMPLE_CHOICES = sorted(
@@ -244,6 +261,12 @@ def run_dark_factory_calculator(config_dir: Path) -> str:
 
 
 def run_example(example: str) -> str:
+    if example in FLOW_EXAMPLE_RUNNERS:
+        return FLOW_EXAMPLE_RUNNERS[example]()
+    for example_name, example_config in EXAMPLES.items():
+        if example in example_config["aliases"] and example_name in FLOW_EXAMPLE_RUNNERS:
+            return FLOW_EXAMPLE_RUNNERS[example_name]()
+
     example_config = resolve_example(example)
     config_dir = example_config["config_dir"]
     if config_dir.name == "config" and config_dir.parent.name == "06_dark_factory_calculator":

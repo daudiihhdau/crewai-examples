@@ -1,0 +1,16 @@
+name: flow_branching
+level: 08
+topic: Bedingte Pfade
+concepts:
+  - Branching
+  - Router-Entscheidung
+  - State-basierte Auswahl
+inputs:
+  regen_chance: zufaellige Prozentzahl
+  budget: zufaelliger Euro-Wert
+branches:
+  drinnen: Regenwahrscheinlichkeit ist hoch
+  sparsam: Budget ist niedrig
+  draussen: Wetter und Budget passen
+takeaway: >
+  Ein Flow ist passend, wenn ein Prozess je nach Daten anders weiterlaufen soll.
